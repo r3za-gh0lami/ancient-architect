@@ -1,5 +1,7 @@
 # 🏛️ معمار کهن (Ancient Architect)
 
+**[🇮🇷 برای مطالعه توضیحات کامل به زبان فارسی اینجا کلیک کنید](README-fa.md)**
+
 **A 3D Procedural Pomodoro & Productivity App based on Ancient Persian Architecture**
 
 *Ancient Architect* is an innovative, 100% offline, and gamified productivity app (Pomodoro Timer) built for Android. It turns your deep work and study sessions into a visually stunning, real-time 3D construction of ancient Persian civilizations. 
