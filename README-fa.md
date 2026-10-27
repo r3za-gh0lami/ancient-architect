@@ -59,7 +59,7 @@
 
 ۱. مخزن را کلون کنید:
    ```bash
-   git clone https://github.com/rezaa-artt/ancient-architect.git
+   git clone https://github.com/R3zagh0lami/ancient-architect.git
    ```
 ۲. پروژه را در **Android Studio** باز کنید.
 ۳. بیلد گرفته و روی شبیه‌ساز یا دستگاه اندرویدی (اندروید ۷.۰ به بالا) اجرا کنید.
