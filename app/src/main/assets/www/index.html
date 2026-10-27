@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>معمار کهن (Ancient Architect) - Focus & Pomodoro</title>
+  <!-- Local Offline First Stylesheet (Instant Load 0ms) -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Optional Non-Blocking Online Font Enhancements -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <style>
+    body {
+      font-family: 'Vazirmatn', -apple-system, system-ui, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.15; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(1.06); }
+    }
+    .anim-pulse-glow { animation: pulseGlow 4s infinite ease-in-out; }
+    @keyframes torchFlicker {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      25% { opacity: 1; transform: scale(1.15); }
+      50% { opacity: 0.7; transform: scale(0.95); }
+      75% { opacity: 0.95; transform: scale(1.08); }
+    }
+    .anim-torch { animation: torchFlicker 0.6s infinite ease-in-out; transform-origin: center; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-start p-2 sm:p-4">
+
+  <!-- Desktop Top Control Bar -->
+  <div id="desktop-nav" class="w-full max-w-md md:max-w-4xl mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+    <div class="flex items-center gap-2">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-teal-600 via-teal-500 to-amber-500 flex items-center justify-center text-lg shadow-md shadow-teal-950">
+        🏛️
+      </div>
+      <div>
+        <h1 class="text-sm md:text-base font-black text-amber-400">اپلیکیشن «معمار کهن» (Ancient Architect)</h1>
+        <p class="text-[10px] text-slate-400">پومودورو و شهرسازی کهن ایران • نسخه کامل بدون تبلیغات</p>
+      </div>
+    </div>
+
+    <!-- Quick Screen Switcher -->
+    <div class="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[11px]">
+      <button onclick="setScreen('home')" id="pill-home" class="screen-pill-btn px-2.5 py-1 rounded-lg font-bold bg-teal-600 text-white shadow">
+        ۱. تایمر
+      </button>
+      <button onclick="setScreen('active')" id="pill-active" class="screen-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white">
+        ۲. تمرکز
+      </button>
+      <button onclick="setScreen('civs')" id="pill-civs" class="screen-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white">
+        ۳. تمدن‌ها
+      </button>
+      <button onclick="setScreen('stats')" id="pill-stats" class="screen-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white">
+        ۴. کارنامه
+      </button>
+      <button onclick="setScreen('museum')" id="pill-museum" class="screen-pill-btn px-2.5 py-1 rounded-lg font-medium text-slate-400 hover:text-white">
+        ۵. موزه
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Mobile App Shell (390px Mobile Viewport) -->
+  <div class="relative w-full max-w-[390px] min-h-[760px] bg-gradient-to-b from-slate-900 via-slate-950 to-[#060911] rounded-[36px] border border-slate-800 shadow-2xl overflow-hidden flex flex-col justify-between select-none">
+
+    <!-- Top Status Header -->
+    <header class="pt-5 px-5 pb-2 flex items-center justify-between z-10">
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1 bg-slate-800/90 border border-slate-700/60 px-2.5 py-1 rounded-full text-xs font-bold text-amber-400">
+          <span>🔥</span> <span class="streak-value">۵ روز</span>
+        </div>
+        <div class="flex items-center gap-1 bg-slate-800/90 border border-slate-700/60 px-2.5 py-1 rounded-full text-xs font-bold text-yellow-300">
+          <span>🪙</span> <span class="coins-value">۱,۲۴۰</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <button onclick="openStoryModal()" class="px-2.5 py-1 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 text-slate-950 text-[10px] font-black flex items-center gap-1 shadow-md hover:brightness-110 transition" title="کارت استوری اینستاگرام">
+          <span>📸</span> استوری
+        </button>
+        <button onclick="openAmbientModal()" class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs text-slate-300 hover:text-teal-400 transition" title="تنظیمات آواهای تمرکز">
+          🎵
+        </button>
+        <button onclick="toggleMasterSound()" id="master-sound-btn" class="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-bold flex items-center gap-1">
+          <span>🔈</span> صدا
+        </button>
+      </div>
+    </header>
+
+    <!-- Dynamic Screens Viewport -->
+    <main class="flex-1 px-5 pb-20 pt-1 overflow-y-auto">
+
+      <!-- ================= 1. HOME SCREEN (TIMER & MONUMENT) ================= -->
+      <div id="view-home" class="view-screen space-y-3.5">
+        <!-- Current Civilization Header Card -->
+        <div onclick="setScreen('civs')" class="cursor-pointer bg-gradient-to-r from-teal-950/70 to-slate-900 border border-teal-800/50 rounded-2xl p-3 flex items-center justify-between hover:border-teal-500 transition">
+          <div class="text-right">
+            <div class="flex items-center gap-1.5">
+              <span id="civ-title" class="text-xs font-black text-teal-400">تمدن پارسه (تخت جمشید)</span>
+              <span class="w-2 h-2 rounded-full bg-teal-400 animate-ping"></span>
+            </div>
+            <p id="civ-era" class="text-[10px] text-slate-400 mt-0.5">دوره هخامنشی • سطح ۳</p>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            <span id="civ-progress-text" class="text-xs font-black text-teal-300">۷۵٪</span>
+            <div class="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="civ-progress-bar" class="w-3/4 h-full bg-teal-400 transition-all duration-500"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Central Dynamic Monument Visual (Changes with Civilization) -->
+        <div class="relative py-1 flex flex-col items-center justify-center">
+          <div class="absolute w-64 h-64 rounded-full bg-amber-500/10 blur-3xl anim-pulse-glow"></div>
+          
+          <div id="monument-visual-container" class="relative w-64 h-64 flex items-center justify-center rounded-full overflow-hidden shadow-2xl">
+            <!-- 3D Canvas or Dynamic SVG inserted via JS -->
+          </div>
+
+          <!-- Timer Clock Display -->
+          <div class="relative mt-2 flex flex-col items-center">
+            <div id="home-timer-display" class="text-4xl font-black tracking-wider text-white">۲۵:۰۰</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">خشت‌گذاری برای تمدن کهن ایران</div>
+          </div>
+        </div>
+
+        <!-- Category Selector Tags -->
+        <div class="flex items-center justify-center gap-1.5">
+          <button onclick="selectCategory('درس و کنکور')" id="cat-درس و کنکور" class="cat-btn px-2.5 py-1 rounded-xl text-[11px] font-bold bg-teal-600 text-white shadow">
+            📚 کنکور
+          </button>
+          <button onclick="selectCategory('کتابخوانی')" id="cat-کتابخوانی" class="cat-btn px-2.5 py-1 rounded-xl text-[11px] font-medium bg-slate-800 text-slate-400 hover:text-white">
+            📖 مطالعه
+          </button>
+          <button onclick="selectCategory('کار عمیق')" id="cat-کار عمیق" class="cat-btn px-2.5 py-1 rounded-xl text-[11px] font-medium bg-slate-800 text-slate-400 hover:text-white">
+            💻 کار عمیق
+          </button>
+        </div>
+
+          <!-- Pomodoro Time Presets -->
+        <div class="flex items-center justify-center gap-1.5">
+          <button onclick="setTimerPreset(25)" id="preset-25" class="preset-btn px-3 py-1 rounded-xl text-xs font-bold bg-teal-600 text-white shadow">
+            ۲۵ دقیقه
+          </button>
+          <button onclick="setTimerPreset(50)" id="preset-50" class="preset-btn px-3 py-1 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:text-white">
+            ۵۰ دقیقه
+          </button>
+          <button onclick="setTimerPreset(5)" id="preset-5" class="preset-btn px-2.5 py-1 rounded-xl text-xs font-medium bg-slate-800 text-slate-300 hover:text-white">
+            ۵ دقیقه
+          </button>
+          <button onclick="setTimerPreset(0.1)" id="preset-0.1" class="preset-btn px-2.5 py-1 rounded-xl text-xs font-bold bg-amber-600/90 border border-amber-500 text-white shadow" title="تست سریع ۶ ثانیه‌ای">
+            ⚡ تست (۶ ثانیه)
+          </button>
+        </div>
+
+        <!-- Ambient Sound Summary Bar -->
+        <button onclick="openAmbientModal()" class="w-full bg-slate-800/60 border border-slate-700/60 rounded-xl p-2 flex items-center justify-between text-xs text-slate-300 hover:border-teal-500 transition">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-teal-900/80 text-teal-300 flex items-center justify-center text-[9px]">▶</span>
+            <span class="text-[11px]">آوا: سه‌تار سنتی، بادگیر و باران</span>
+          </div>
+          <span class="text-teal-400 font-bold text-[11px]">تنظیم ❯</span>
+        </button>
+
+        <!-- Main CTA Button -->
+        <button onclick="startFocusSession()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-teal-600 via-teal-500 to-amber-500 text-white font-black text-sm shadow-xl shadow-teal-950/60 hover:brightness-110 active:scale-[0.98] transition flex items-center justify-center gap-2">
+          <span>🏛️</span> آغاز خشت‌گذاری و تمرکز
+        </button>
+      </div>
+
+      <!-- ================= 2. ACTIVE FOCUS SCREEN ================= -->
+      <div id="view-active" class="view-screen hidden space-y-4">
+        <!-- Strict Mode Alert Badge -->
+        <div class="bg-rose-950/60 border border-rose-600/70 rounded-full py-1 px-3 flex items-center justify-center gap-1.5 text-[11px] text-rose-200 font-bold">
+          <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+          حالت سخت‌گیرانه فعال است • خروج = ویرانی بنا!
+        </div>
+
+        <!-- Scaffolding Monument Visual in Progress -->
+        <div class="relative py-2 flex flex-col items-center">
+          <svg class="w-48 h-32 drop-shadow-2xl" viewBox="0 0 200 130">
+            <polygon points="100,20 180,60 100,100 20,60" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+            <line x1="50" y1="10" x2="50" y2="70" stroke="#b45309" stroke-width="2.5"/>
+            <line x1="70" y1="10" x2="70" y2="70" stroke="#b45309" stroke-width="2.5"/>
+            <line x1="45" y1="30" x2="75" y2="30" stroke="#b45309" stroke-width="2"/>
+            <line x1="45" y1="50" x2="75" y2="50" stroke="#b45309" stroke-width="2"/>
+            <rect x="54" y="25" width="12" height="38" rx="2" fill="#cbd5e1"/>
+            <rect x="135" y="20" width="12" height="42" rx="2" fill="#e2e8f0"/>
+            <polygon points="130,20 152,20 147,15 135,15" fill="#f59e0b"/>
+            <circle cx="68" cy="20" r="4" fill="#fde047"/>
+            <path d="M65,24 L71,24 L73,32 L63,32 Z" fill="#f59e0b"/>
+          </svg>
+
+          <!-- Circular Countdown Ring -->
+          <div class="relative mt-2 flex flex-col items-center">
+            <div id="active-timer-display" class="text-5xl font-black tracking-widest text-teal-300">۲۵:۰۰</div>
+            <div class="text-[11px] text-teal-400/90 mt-1 font-medium">سنگ‌ها یکی‌یکی در جای خود می‌نشینند...</div>
+          </div>
+        </div>
+
+        <!-- Persian Wisdom Quote Card -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 text-right space-y-1">
+          <p id="active-quote-text" class="text-xs font-bold text-slate-100">«توانا بود هر که دانا بود»</p>
+          <p id="active-quote-author" class="text-[10px] text-slate-400">ز دانش دل پیر برنا بود — فردوسی</p>
+        </div>
+
+        <button onclick="triggerRuinedState()" class="w-full py-2.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/50 border border-rose-800/60 text-rose-300 text-xs font-bold transition flex items-center justify-center gap-1.5">
+          <span>🚨</span> شبیه‌سازی خروج از برنامه و افتادن بنا
+        </button>
+      </div>
+
+      <!-- ================= 3. RUINED STATE SCREEN ================= -->
+      <div id="view-ruined" class="view-screen hidden space-y-3.5">
+        <div class="py-1 flex flex-col items-center text-center">
+          <div class="w-12 h-12 rounded-full bg-rose-950/80 border border-rose-600 flex items-center justify-center text-2xl text-rose-300 animate-bounce">
+            ⚠️
+          </div>
+          <h3 class="text-base font-black text-rose-400 mt-2">بنا در آستانه فروریختن است!</h3>
+          <p class="text-[11px] text-slate-400 mt-0.5">تمرکز شما شکسته شد و کارگران دست از کار کشیدند</p>
+        </div>
+
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500/80 rounded-3xl p-4 text-center space-y-3 shadow-2xl">
+          <div class="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-400 mx-auto flex items-center justify-center text-xl text-amber-300">
+            ✨
+          </div>
+
+          <h4 class="text-xs font-black text-white">فرصت نجات و احیای سازه</h4>
+          <p class="text-[11px] text-slate-300 leading-relaxed">
+            معمار ارشد می‌تواند با اراده شما خشت‌ها را دوباره احیا کند تا رکورد روزانه شما حفظ شود!
+          </p>
+
+          <div class="bg-slate-800/90 border border-amber-600/50 rounded-full py-1 px-4 inline-block text-xs font-bold text-amber-300">
+            ⏳ مهلت بازگشت: <span id="grace-ticker">۳۰</span> ثانیه
+          </div>
+
+          <button onclick="recoverRuinedSessionWithGrace()" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-teal-500 via-teal-400 to-amber-500 text-slate-950 font-black text-xs shadow-lg shadow-teal-950 hover:brightness-110 active:scale-[0.98] transition flex items-center justify-center gap-2">
+            <span>✨</span> بازسازی فوری و ادامه تمرکز
+          </button>
+
+          <button onclick="abandonRuinedSession()" class="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 text-[11px] transition">
+            تسلیم می‌شوم (تخریب کامل بنا)
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= 4. CIVILIZATIONS MAP SCREEN ================= -->
+      <div id="view-civs" class="view-screen hidden space-y-3">
+        <div class="text-right">
+          <h3 class="text-sm font-black text-white">نقشه تمدن‌های کهن</h3>
+          <p class="text-[11px] text-slate-400">یکی از تمدن‌های زیر را انتخاب کنید تا برای آن خشت بگذارید:</p>
+        </div>
+
+        <!-- 1. Persepolis -->
+        <div onclick="selectCivilization('persepolis')" class="cursor-pointer bg-gradient-to-r from-teal-950/80 to-slate-900 border-2 border-teal-500 rounded-2xl p-3.5 space-y-2 hover:border-teal-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-teal-500 text-white">انتخاب شده ⚡</span>
+            <span class="text-xs font-black text-white">۱. پارسه (تخت جمشید)</span>
+          </div>
+          <p class="text-[11px] text-slate-300 text-right">دوره هخامنشی • کاخ آپادانا و دروازه ملل</p>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="w-3/4 h-full bg-teal-400"></div>
+          </div>
+        </div>
+
+        <!-- 2. Isfahan -->
+        <div onclick="selectCivilization('isfahan')" class="cursor-pointer bg-gradient-to-r from-sky-950/70 to-slate-900 border border-sky-600/60 rounded-2xl p-3.5 space-y-2 hover:border-sky-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-600 text-white">فعال 🕌</span>
+            <span class="text-xs font-black text-white">۲. نصف جهان (اصفهان صفوی)</span>
+          </div>
+          <p class="text-[11px] text-slate-300 text-right">گنبد فیروزه‌ای شیخ لطف‌الله، عالی‌قاپو و حوض میدان</p>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="w-1/4 h-full bg-sky-400"></div>
+          </div>
+        </div>
+
+        <!-- 3. Yazd -->
+        <div onclick="selectCivilization('yazd')" class="cursor-pointer bg-gradient-to-r from-amber-950/70 to-slate-900 border border-amber-600/60 rounded-2xl p-3.5 space-y-2 hover:border-amber-400 transition">
+          <div class="flex items-center justify-between">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-600 text-white">فعال 🏜️</span>
+            <span class="text-xs font-black text-white">۳. شهر بادگیرها (یزد کهن)</span>
+          </div>
+          <p class="text-[11px] text-slate-300 text-right">معماری خشتی، بادگیرهای افراشته و قنات‌های زنده</p>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="w-1/6 h-full bg-amber-400"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 5. STATS & ANALYTICS SCREEN ================= -->
+      <div id="view-stats" class="view-screen hidden space-y-3.5">
+        <div class="flex items-center justify-between">
+          <button onclick="openStoryModal()" class="px-2.5 py-1 rounded-xl bg-amber-500/20 border border-amber-500/50 text-amber-300 text-xs font-bold flex items-center gap-1">
+            <span>📸</span> خروجی عکس استوری
+          </button>
+          <div class="text-right">
+            <h3 class="text-sm font-black text-white">کارنامه هفتگی تمرکز</h3>
+            <p class="text-[10px] text-slate-400">مجموع این هفته: <span id="total-week-hours" class="text-teal-300 font-bold">--</span></p>
+          </div>
+        </div>
+
+        <!-- Weekly Bar Chart -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5">
+          <div id="weekly-chart-bars" class="flex items-end justify-between gap-1 pt-2">
+            <!-- Dynamic Chart Bars via JS -->
+          </div>
+        </div>
+
+        <!-- Category Breakdown Stats -->
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
+            <span class="text-lg">📚</span>
+            <div class="text-slate-400 text-[10px] mt-1">کنکور و درس</div>
+            <div class="font-bold text-teal-300 mt-0.5">۸ ساعت</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
+            <span class="text-lg">📖</span>
+            <div class="text-slate-400 text-[10px] mt-1">کتابخوانی</div>
+            <div class="font-bold text-sky-300 mt-0.5">۳.۵ ساعت</div>
+          </div>
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5">
+            <span class="text-lg">💻</span>
+            <div class="text-slate-400 text-[10px] mt-1">کار عمیق</div>
+            <div class="font-bold text-amber-300 mt-0.5">۳.۲ ساعت</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= 6. MUSEUM OF ARTIFACTS SCREEN ================= -->
+      <div id="view-museum" class="view-screen hidden space-y-3">
+        <div class="text-right">
+          <h3 class="text-sm font-black text-amber-400 flex items-center gap-1.5 justify-end">
+            <span>موزه کشفیات باستانی</span> <span>🏺</span>
+          </h3>
+          <p class="text-[10px] text-slate-400">اشیاء تاریخی که در حین خشت‌گذاری از دل خاک کشف کرده‌اید:</p>
+        </div>
+
+        <div id="museum-items-container" class="space-y-2.5">
+          <!-- Artifact Cards via JS -->
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Persistent) -->
+    <nav class="absolute bottom-0 left-0 right-0 h-16 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex items-center justify-around px-2 z-20">
+      <button onclick="setScreen('home')" id="nav-home" class="nav-item flex flex-col items-center gap-0.5 text-teal-400">
+        <span class="text-lg">🏛️</span>
+        <span class="text-[9px] font-bold">معمار</span>
+      </button>
+      <button onclick="setScreen('civs')" id="nav-civs" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-200">
+        <span class="text-lg">🗺️</span>
+        <span class="text-[9px]">تمدن‌ها</span>
+      </button>
+      <button onclick="setScreen('stats')" id="nav-stats" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-200">
+        <span class="text-lg">📊</span>
+        <span class="text-[9px]">کارنامه</span>
+      </button>
+      <button onclick="setScreen('museum')" id="nav-museum" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-200">
+        <span class="text-lg">🏺</span>
+        <span class="text-[9px]">موزه</span>
+      </button>
+      <button onclick="openAmbientModal()" class="nav-item flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-200">
+        <span class="text-lg">🎵</span>
+        <span class="text-[9px]">آواها</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- INSTAGRAM STORY MODAL & CANVAS GENERATOR -->
+  <div id="story-modal" class="fixed inset-0 bg-black/90 z-50 hidden flex flex-col items-center justify-center p-3">
+    <div class="w-full max-w-sm bg-slate-900 border border-amber-500/70 rounded-3xl p-4 text-center space-y-3 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <h3 class="text-xs font-bold text-amber-300">📸 کارت استوری اینستاگرام</h3>
+        <button onclick="closeStoryModal()" class="text-slate-400 hover:text-white text-base">✕</button>
+      </div>
+
+      <!-- Canvas Preview Area (Scaled for mobile view) -->
+      <div class="w-full flex justify-center py-1">
+        <canvas id="story-canvas" class="w-[200px] h-[355px] rounded-2xl shadow-xl border border-amber-600/40"></canvas>
+      </div>
+
+      <p class="text-[10px] text-slate-400">عکس باکیفیت و با حاشیه تذهیب مینیاتوری از ساعات مطالعه شما آماده شد.</p>
+
+      <div class="flex gap-2">
+        <button onclick="downloadStoryImage()" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-slate-950 font-black text-xs shadow-md hover:brightness-110 transition flex items-center justify-center gap-1.5">
+          <span>💾</span> دانلود عکس استوری (PNG)
+        </button>
+        <button onclick="closeStoryModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-medium hover:bg-slate-700 transition">
+          بستن
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ambient Sound Controls Modal -->
+  <div id="ambient-sound-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-slate-900 border border-slate-700 rounded-3xl p-5 text-right space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>🎵</span> تنظیم آواهای آرامش‌بخش
+        </h3>
+        <button onclick="closeAmbientModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-2.5 bg-slate-800/80 rounded-xl space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200">نسیم بادگیرهای یزد 🏜️</span>
+            <input type="checkbox" checked onchange="window.soundEngine.toggleChannel('wind')" class="accent-teal-500 w-4 h-4 cursor-pointer">
+          </div>
+          <input type="range" min="0" max="1" step="0.05" value="0.35" oninput="window.soundEngine.setChannelVolume('wind', parseFloat(this.value))" class="w-full accent-teal-500 h-1 bg-slate-700 rounded-lg">
+        </div>
+
+        <div class="p-2.5 bg-slate-800/80 rounded-xl space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200">باران روی بام کاه‌گلی 🌧️</span>
+            <input type="checkbox" checked onchange="window.soundEngine.toggleChannel('rain')" class="accent-teal-500 w-4 h-4 cursor-pointer">
+          </div>
+          <input type="range" min="0" max="1" step="0.05" value="0.35" oninput="window.soundEngine.setChannelVolume('rain', parseFloat(this.value))" class="w-full accent-teal-500 h-1 bg-slate-700 rounded-lg">
+        </div>
+
+        <div class="p-2.5 bg-slate-800/80 rounded-xl space-y-1.5 border border-amber-500/30">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="text-[9px] bg-amber-500/20 text-amber-300 px-1 py-0.5 rounded">ویژه</span>
+              <span class="font-bold text-amber-200">نغمه سه‌تار و لوفای سنتی 🎶</span>
+            </div>
+            <input type="checkbox" checked onchange="window.soundEngine.toggleChannel('setar')" class="accent-amber-500 w-4 h-4 cursor-pointer">
+          </div>
+          <input type="range" min="0" max="1" step="0.05" value="0.45" oninput="window.soundEngine.setChannelVolume('setar', parseFloat(this.value))" class="w-full accent-amber-500 h-1 bg-slate-700 rounded-lg">
+        </div>
+
+        <div class="p-2.5 bg-slate-800/80 rounded-xl space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-slate-200">حوض کاشی‌کاری و فواره ⛲</span>
+            <input type="checkbox" onchange="window.soundEngine.toggleChannel('fountain')" class="accent-teal-500 w-4 h-4 cursor-pointer">
+          </div>
+          <input type="range" min="0" max="1" step="0.05" value="0.30" oninput="window.soundEngine.setChannelVolume('fountain', parseFloat(this.value))" class="w-full accent-teal-500 h-1 bg-slate-700 rounded-lg">
+        </div>
+      </div>
+
+      <button onclick="closeAmbientModal()" class="w-full py-2.5 rounded-xl bg-teal-600 text-white font-bold text-xs hover:bg-teal-500 transition">
+        ذخیره و بستن
+      </button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="js/engine3d.js"></script>
+  <script src="js/soundEngine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
