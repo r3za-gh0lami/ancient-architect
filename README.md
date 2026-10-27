@@ -68,13 +68,6 @@ With a single tap, the app renders a high-resolution (9:16) aesthetic canvas det
 ## 📸 Screenshots
 *(Coming soon: Add your app screenshots here!)*
 
----
-
-## 🤝 Contribution & Future Roadmap
-* **Phase 2:** Integrate Room Database (SQLite) for more robust local data persistence.
-* **Phase 3:** Full 3D procedural modeling of **Safavid Isfahan** and **Yazd Windcatchers**.
-* **Phase 4:** Tapsell Plus (تپسل) monetization integration.
-
 <br/>
 <p align="center">
   <b>طراحی و توسعه برای ارتقاء فرهنگ کار عمیق و مطالعه در ایران</b> 🇮🇷
