@@ -57,7 +57,7 @@ With a single tap, the app renders a high-resolution (9:16) aesthetic canvas det
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/R3zagh0lami/ancient-architect.git
+   git clone https://github.com/r3za-gh0lami/ancient-architect.git
    ```
 2. Open the project in **Android Studio**.
 3. Build and Run on any Android Emulator or physical device (Android 7.0+).
